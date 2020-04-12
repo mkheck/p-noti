@@ -11,6 +11,7 @@ import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.cloud.stream.messaging.Sink;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import reactor.core.publisher.Flux;
 
 import java.util.function.Consumer;
 
@@ -33,11 +34,12 @@ class PizzaNotifier {
 }
 */
 
-@EnableBinding(Sink.class)
+@Configuration
 class PizzaNotifier {
-	@StreamListener(Sink.INPUT)
-	public void notifyCustomer(Pizza pizza) {
-		System.out.println(pizza);
+	@Bean
+	Consumer<Flux<Pizza>> notifyCustomer() {
+		//return System.out::println;
+		return flux -> flux.subscribe(pizza -> System.out.println("   >>> Your pizza is being prepared: " + pizza.getDescription()));
 	}
 }
 
