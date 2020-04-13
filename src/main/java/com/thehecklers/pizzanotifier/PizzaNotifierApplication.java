@@ -1,14 +1,7 @@
 package com.thehecklers.pizzanotifier;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.stream.annotation.EnableBinding;
-import org.springframework.cloud.stream.annotation.StreamListener;
-import org.springframework.cloud.stream.messaging.Sink;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import reactor.core.publisher.Flux;
@@ -39,14 +32,11 @@ class PizzaNotifier {
 	@Bean
 	Consumer<Flux<Pizza>> notifyCustomer() {
 		//return System.out::println;
-		return flux -> flux.subscribe(pizza -> System.out.println("   >>> Your pizza is being prepared: " + pizza.getDescription()));
+		return flux -> flux.subscribe(pizza -> System.out.println("   >>> Your pizza is being prepared: " + pizza.description()));
 	}
 }
 
 
-@Data
-@AllArgsConstructor
-class Pizza {
-	private final Long id;
-	private final String description;
-}
+//@Data
+//@AllArgsConstructor
+record Pizza (Long id, String description) {}
