@@ -36,7 +36,4 @@ class PizzaNotifier {
 	}
 }
 
-
-//@Data
-//@AllArgsConstructor
 record Pizza (Long id, String description) {}
